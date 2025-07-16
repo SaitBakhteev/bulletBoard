@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated  %}
+        Вы уже вошли в систему как {{ user.username }}
+    {% else %}
+    
+        <!-- Если пользователь ещё не авторизован, то появляется форма для
+        входа и кнопка регистрации для тех, кто ещё не зарегистрирован -->
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Войти">
+        </form>
+        <button><a href="{% url 'signup' %}">Регистрация</a></button>
+
+    {% endif %}
+{% endblock content %}

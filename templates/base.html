@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доска объявлений</title>
+    {% load static %}    
+    <link href="{% static 'css/styles.css' %}?v{% now 'U' %} " rel="stylesheet">
+</head>
+<body>
+    <h1 class="navbar">Меню доски объявлений</h1>
+    <nav class="navbar">        
+        <div class="container-fluid">
+            <ul >
+                <li><a href="{% url 'ad_list' %}">Все объявления</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'responses' %}">Отклики на мои объявления</a></li>
+                    <li><i>👤 Пользователь {{ user.username }}</i></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Выйти">
+                        </form>
+                    </li>
+                {% else %}
+                    <li>
+                        <button><a href="{% url 'login' %}">Войти</a></button>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Кнопка добавления объявления. Располагается под панелью -->    
+    <form >
+        <button type="button" >+ Добавить объявление</button>
+    </form>
+    
+
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
