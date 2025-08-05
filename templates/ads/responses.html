@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+
+
+{% block content %}
+    {% include 'ads/paginator.html' %}
+
+    <!-- фильтр поиска откликов -->
+    <div class="card border-2 border-dark col-md-3 ms-5">
+        <h3 class="h3 ms-2">Фильтр поиска откликов</h3>
+        <form action="" method="get" class="ms-2 mt-3 mb-3 col-md-auto me-5">
+            {{ filter | crispy}}
+            <input type="submit" value="Фильтровать" class="btn btn-outline-success mt-2">
+        </form>
+    </div>
+
+    {% if not responses %}
+        <h3> На ваши объявления нет ни одного отклика </h3>
+
+    {% else %}
+
+        {% for i in responses %}
+            <div class="card card-body mt-2 border border-4 col-md-9 ms-5">
+                <div class="align-items-center justify-content-between ms-2">
+                    <div class="d-flex bg-info bg-opacity-25 p-2 mb-3">
+                        <div>
+                            <h6 class="h6">Отклик на объявление</h6>
+                            <h5><a href="{{ i.ad.pk }}">{{ i.ad.title }}</a></h5>
+                        </div>
+                        <div class="ms-auto me-2">
+                            <p class="text-dark">
+                                Дата объявления <span class="fst-italic">{{ i.ad.created_at | date:"d.m.Y" }}</span>
+                            </p>
+                            <p class="text-dark">
+                                Категория <span class="fst-italic">{{ i.ad.get_category_display }}</span>
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="me-auto mx-auto">
+                        Пользователь
+                        <span class="fw-bolder fst-italic"> {{ i.author }} </span>
+                        оставил следующий отклик:
+                        <div class="bg-light p-3 rounded-3 mb-3">
+                            <p class="mb-0 fst-italic text-muted">{{ i.text }}</p>
+                        </div>
+                        Дата отклика <p class=""> {{ i.created_at|date:"d.m.Y" }} </p>
+                    </div>
+                </div>
+                    <div class="ms-auto">
+                        {% if i.is_accepted %}
+                            <p class="text-success ms-auto h5">Вы приняли отклик</p>
+                        {% else %}
+                            <div class="d-flex">
+                                <p>
+                                    <a href="{% url 'response_accept' pk=i.pk %}"
+                                           class="btn fixed-btn-width btn-success ms-auto me-2"
+                                           data-bs-toggle="modal" data-bs-target="#acceptModal{{ i.pk }}">
+                                        Принять
+                                    </a>
+                                    {% include 'ads/modal and any forms/confirm_response_accept.html' with pk=i.pk %}
+                                </p>
+                                <p>
+                                    <a href="{% url 'response_delete' pk=i.pk %}" 
+                                       class="btn fixed-btn-width btn-danger ms-auto"
+                                       data-bs-toggle="modal" data-bs-target="#acceptModaldelete{{ i.pk }}">
+                                        Удалить                                        
+                                    </a>
+                                    {% include 'ads/modal and any forms/confirm_response_delete.html' with pk=i.pk %}
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+{% endblock content %}

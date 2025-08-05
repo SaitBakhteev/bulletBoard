@@ -1,9 +1,17 @@
-{% extends 'base.html' %}
-{% block content %}
-    <form method="post" class="form-container">
-        {% csrf_token %}
-    {{ form }}
-        <input type="submit" class="custom_btn" value="Зарегистрироваться">
-    </form>
-    
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% extends 'base.html' %}
+    {% load crispy_forms_tags %}    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доска объявлений</title>    
+</head>
+{% block content %}    
+    <form method="post" class="form-container ms-5 col-md-6" action="">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <input type="submit" class="btn btn-outline-dark mt-1" value="Зарегистрироваться"
+                {% if verify_form %} disabled {% endif %} >
+        </form>
 {% endblock content %}

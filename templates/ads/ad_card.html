@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+
+{% block content %}
+    <div class="container-fluid col-md-10 ms-2">
+        <div class="card">
+            <div class="d-flex card-header text-bg-info bg-opacity-10">
+                <h6 class="h6"> {{ ad.title }} </h6>
+                <div class="ms-auto">                    
+                        <p>
+                            <span class="fw-bold">Категория</span>
+                            <span class="fst-italic ">{{ ad.get_category_display }}</span>
+                        </p>
+                        <p>
+                            <span class="fw-bold">Опубликовано</span>
+                            <span class="fst-italic "> {{ ad.created_at|date:"d.m.Y" }} </span>
+                        </p>
+                </div>
+            </div>
+    
+        <!-- Специальный встроенный в django тег safe, позволяющий не
+        экранировать html-код, генерируемый в ck_editor -->
+            <div >{{ ad.content|safe }}</div>
+        </div>
+        
+        <!-- БЛОК РАБОТЫ С ОТКЛИКАМИ ИЛИ РЕДАКТИРОВАНИЯ ОБЪЯВЛЕНИЯ  -->
+        {% if user.is_authenticated %} <!-- это главное условие -->
+            {% if ad.author == user %} <!-- если это объявление пользователя -->
+                <a href="{{ ad.pk }}/edit" class="btn btn-secondary">Редактировать</a>
+            
+            <!-- Определение условий доступности формы отклика-->
+            {% else%}
+                {% if response %} <!-- если пользователь уже оставил отклик -->
+                    {% if response.is_accepted %}
+                        <label class="form-label text-bg-success">Ваш отклик одобрен</label>
+                    {% else %}
+                        <label class="form-label text-bg-info">Вы уже оставили отклик</label>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'response_create' ad_id=ad.id %}" class="btn btn-outline-primary">Оставить отклик </a>
+                {% endif %}
+            {% endif %}
+            
+            <!-- Условие открытия формы отправки отклика -->
+            {% if response_create %}
+                <form action="" method="post" class="ms-2 mt-3">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <input type="submit" value="Отправить 🔉" class="mt-2 btn btn-outline-dark">
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+
+{% endblock content %}

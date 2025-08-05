@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if form %}
+        <form method="post" action="" class="col-md-4 ms-5 mt-3">
+            {% csrf_token %}
+            {{ form | crispy}}
+            <input type="submit" value="Подтвердить" class="btn btn-outline-secondary mt-2">
+        </form>
+    {% elif manager_is_added %}
+        <h3 class="h3 text-bg-success">Теперь Вы менеджер!</h3>
+    {% else %}
+        <h3 class="ms-5">Вы уже обладаете правами менеджера</h3>
+    {% endif %}
+{% endblock content %}

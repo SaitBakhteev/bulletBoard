@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+
+{% block content %}
+    <div class="card border-primary border-3 ms-5 col-md-3 text-bg-info">
+        <label class="h4 mb-2 mt-2 ms-2">Категории подписчика</label>
+        <form action="" method="post" class="ms-3">
+            {% csrf_token %}
+            {{ form.category | as_crispy_field }}
+            <input type="submit" value="Сохранить" class="btn btn-secondary mt-2 mb-2">
+        </form>
+    </div>
+{% endblock content %}

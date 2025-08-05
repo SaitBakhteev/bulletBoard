@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Объявления за неделю</title>
+</head>
+<body>
+    <h3 class="h3">Уважаемый 
+        {% if user.first_name %}
+            {{ user.first_name }}!
+        {% else %}
+            подписчик
+        {% endif %}
+    </h3>
+    <p class="text-bg-secondary">Список объявлений по Вашим категориям, вышедших за неделю:</p>
+    {% for ad in ads %}
+        <p class="h5"><a href="http://localhost:8000/ads/{{ ad.pk }}">{{ ad.title }}</a></p>
+    {% endfor %}
+</body>
+</html>

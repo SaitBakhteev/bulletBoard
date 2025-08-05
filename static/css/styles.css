@@ -4176,6 +4176,7 @@ textarea.form-control-lg {
   background-clip: border-box;
   border: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: var(--bs-card-border-radius);
+  margin-bottom: 20px;
 }
 .card > hr {
   margin-right: 0;
@@ -4208,6 +4209,7 @@ textarea.form-control-lg {
 
 .card-title {
   margin-bottom: var(--bs-card-title-spacer-y);
+  background-color: #ece1be;
 }
 
 .card-subtitle {
@@ -10828,4 +10830,16 @@ textarea.form-control-lg {
 /* КАСТОМНЫЕ СТИЛИ */
 ul.horizontal {
   display: inline-block;
+}
+
+.small-content {
+  transform: scale(0.6);
+  max-width: 100%;
+}
+
+.fixed-btn-width {
+  width: 150px;
+  min-width: 150px;
+  display: inline-block; /* для корректной работы width */
+  text-align: center;
 }

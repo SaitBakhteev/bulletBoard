@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if form %}
+        <form method="post" action="" class="col-md-4 ms-5 mt-3">
+            {% csrf_token %}
+            {{ form | crispy}}
+            <input type="submit" value="Отправить 📤" class="btn btn-outline-info mt-2">
+        </form>    
+    {% else %}
+        <H4 class="h4 mt-3 ms-5 text-bg-info"> Новости пользователям отправлены успешно </H4>
+    {% endif %}
+{% endblock content %}

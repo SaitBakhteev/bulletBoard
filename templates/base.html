@@ -3,41 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Доска объявлений</title>
-    {% load static %}    
+    <title>Доска объявлений</title>    
+
+    {% load static %}
     <link href="{% static 'css/styles.css' %}?v{% now 'U' %} " rel="stylesheet">
+
+    {% load crispy_forms_field %}    
+    {% load crispy_forms_tags %}
+    
+    <!-- Подключил bootstrap для реализации модальных окон -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1 class="navbar">Меню доски объявлений</h1>
-    <nav class="navbar">        
-        <div class="container-fluid">
-            <ul >
-                <li><a href="{% url 'ad_list' %}">Все объявления</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'responses' %}">Отклики на мои объявления</a></li>
-                    <li><i>👤 Пользователь {{ user.username }}</i></li>
-                    <li>
+<body>    
+    <nav class="navbar navbar-nav">
+        <div class="">
+            <h3 class="h3 text-lg-start">Меню доски объявлений</h3>            
+                <div class="d-flex align-items-center gap-2 px-4 border border-primary border-2 rounded-4 ">
+                
+                <a href="{% url 'ad_list' %}" class="btn btn-info">Все объявления</a>
+                <a href="{% url 'responses' %}" class="btn btn-outline-secondary bg">
+                    Отклики на мои объявления 🔔
+                </a>
+                <a href="{% url 'subcribe_form' %}" class="btn btn-link">Моя подписка</a>
+                <div class="ms-5 mt-2 mb-2">
+                    {% if user.is_authenticated %}
+                        <div class="mb-1">👤
+                            <span class="fst-italic fw-bold mb-1"> {{ user.first_name }}</span>
+                            <p class="fst-italic fw-bold mb-1"> {{ user.username }}</p>
+                        </div>
+                        <div>
+                            
+                        </div>
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
-                            <input type="submit" value="Выйти">
+                            <input type="submit" value="Выйти" class="btn btn-outline-dark">
                         </form>
-                    </li>
-                {% else %}
-                    <li>
-                        <button><a href="{% url 'login' %}">Войти</a></button>
-                    </li>
-                {% endif %}
-            </ul>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn text-bg-primary">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex mt-2 justify-content-end mb-3">
+                <a href="{% url 'add_manager' %}" class="btn btn-outline-primary me-auto">
+                    Я менеджер 🤵🏻‍♂️
+                </a>
+                <a href="{% url 'send_news' %}" class="btn btn-outline-info me-sm-auto">
+                    Разослать новость 📰
+                </a>
+                <a href="{% url 'ad_create' %}" class="btn btn-success rounded-3 ms-auto">
+                    + Добавить объявление
+                </a>
+            </div>
         </div>
     </nav>
 
+    
+    
+    
     <!-- Кнопка добавления объявления. Располагается под панелью -->    
-    <form >
-        <button type="button" >+ Добавить объявление</button>
-    </form>
     
 
     {% block content %}
     {% endblock content %}
+
+    <!-- Ещё один bootsrap здесь нужно подключить для модальных окон -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
