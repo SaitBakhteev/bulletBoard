@@ -144,10 +144,7 @@ celery -A bulletBoard worker beat -l INFO
 - нажмите на инструмент image на панели инструментов<br>
 ![инструмент image()](images/image_tool.png)
 <br><br>
-- в открывшемся окне в поле
-<span style="color: #666; font-weight: bold; text-shadow: 1px 1px 1px #00000020;">
-   URL* </span>
-вставьте URL-адрес картинки.
+- в открывшемся окне в поле <b><i>URL*</i></b> вставьте URL-адрес картинки.
 При необходимости в этом же окне можете изменить размеры картинки.
 Нажмите затем OK и картинка вставится<br>
 
