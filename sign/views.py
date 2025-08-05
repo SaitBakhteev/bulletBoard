@@ -37,8 +37,10 @@ class CustomLoginView(LoginView):
         email = form.data['username']
 
         if User.objects.filter(username=email).exists():
-            send_code(email)
-            return redirect('confirm_email', email=email)
+            user = User.objects.get(username=email)
+            if not user.is_active:
+                send_code(email)
+                return redirect('confirm_email', email=email)
         return super().form_invalid(form)
 
 
