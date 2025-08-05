@@ -65,10 +65,10 @@ MANAGER_CODE=<>  # код для подтверждения статуса ме�
 
 ```python 
 # Такая настройка стоит сейчас в проекте
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 # Если хотите реальную отправке, то пропишите в настройках так
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ```
 
 
