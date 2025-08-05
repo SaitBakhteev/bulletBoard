@@ -119,8 +119,7 @@ celery -A bulletBoard worker -l INFO
 ```
 - в третьем терминале запустите командой
 ```bash
-# для windows
-celery -A bulletBoard worker beat -l INFO
+celery -A bulletBoard beat -l INFO
 ```
 
 ### 2. Теперь Вы можете просматривать список объявлений и отдельные объявления.
